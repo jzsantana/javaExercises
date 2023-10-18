@@ -10,7 +10,7 @@ public class ColisaoTrem {
         // velB sempre negativa
         // maximo 300km
 
-        while(a.equalsIgnoreCase("yes")){
+        while(a.equalsIgnoreCase("yes") || a.equalsIgnoreCase("y")){
             try{
                 while (posA <= 0 || posA >= 10000) {
                     System.out.println("Insira a posição do Trem A: ");
@@ -25,7 +25,7 @@ public class ColisaoTrem {
                     posB = scan.nextDouble();
                 }
 
-                while (velB > 0 || velB < 300) {
+                while (velB >= 0 || velB < -300) {
                     System.out.println("Agora, insira a velocidade do Trem B: ");
                     velB = scan.nextDouble();
                 }
@@ -41,7 +41,7 @@ public class ColisaoTrem {
                     System.out.println("Colidiu aqui: " + posicaoFinal);
                     System.out.println("No tempo: " + tempoFinal);
                 }else{
-
+                    System.out.println("Os trens não colidirão.");
                 }
 
             }catch(InputMismatchException e){
@@ -49,7 +49,7 @@ public class ColisaoTrem {
             }
 
             System.out.println("Deseja calcular novamente?");
-            a = scan.nextLine();
+            a = scan.next();
         }
     }
 }
