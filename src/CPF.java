@@ -1,39 +1,45 @@
 import java.util.Scanner;
 
 public class CPF {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static boolean isCPF(String cpf) {
+        cpf = cpf.replaceAll("[^0-9]", "");
 
-        String cpf;
-        int rcpf;
-        String w = "yes";
-        int sum1, sum2;
-        int dig1, dig2;
-
-        while (w.equals("yes")) {
-            System.out.println("");
-
-            System.out.println("Digite o número do cpf");
-            cpf = sc.nextLine();
-
-            cpf = cpf.replaceAll("\\.", "");
-            cpf = cpf.replaceAll("-", "");
-
-            if (!cpf.matches("[0-9]+")) {
-                System.out.println("Você digitou um caractere invalido. Tente novamente.");
-                continue;
-            }
-            if ((cpf.length() > 11)) {
-                System.out.println("\nVocê execedeu a quantidade de dígitos de um cpf. Tente novamente.");
-                continue;
-            } else if (cpf.length() < 11) {
-                System.out.println("\nVocê digitou uma quantidade abaixo do esperado para um cpf. Tente novamente.");
-                continue;
-            }
-
-            System.out.println("\nVocê deseja realizar a validação de outro cpf?" +
-                    "\nsim  -  [yes]" + "\nnão  -  [no]");
-            w = sc.nextLine().toLowerCase();
+        if (cpf.length() != 11) {
+            return false;
         }
+
+        int soma = 0;
+        for (int i = 0; i < 9; i++) {
+            soma += (10 - i) * Integer.parseInt(String.valueOf(cpf.charAt(i)));
+        }
+        int digito1 = 11 - (soma % 11);
+        if (digito1 > 9) {
+            digito1 = 0;
+        }
+
+        int soma2 = 0;
+        for (int i = 0; i < 10; i++) {
+            soma2 += (11 - i) * Integer.parseInt(String.valueOf(cpf.charAt(i)));
+        }
+        int digito2 = 11 - (soma2 % 11);
+        if (digito2 > 9) {
+            digito2 = 0;
+        }
+
+        if (cpf.charAt(9) - '0' != digito1 || cpf.charAt(10) - '0' != digito2) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        String cpf;
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Digite um cpf para ver se é  verdadeiro: ");
+        cpf = scan.next();
+        System.out.println(isCPF(cpf));
+
     }
 }
